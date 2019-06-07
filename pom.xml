@@ -32,7 +32,7 @@
 
   <build>
     <!-- <finalName>mvnTrainingWebApp</finalName> -->
-    <finalName>${project.artifactId}##${project.version}</finalName>
+    <finalName>${project.artifactId}</finalName>
 
     <resources>
       <resource>

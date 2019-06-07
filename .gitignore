@@ -1,0 +1,17 @@
+# Ignore target folder
+target/
+
+# Ignore target folder
+.settings/
+*.project
+
+# Java Files
+*.class
+*.classpath
+*.jar
+*.war
+*.ear
+*.logs
+*.iml
+.idea/
+.eclipse
