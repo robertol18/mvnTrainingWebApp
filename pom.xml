@@ -17,9 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <!-- <tomcat6.maven.plugin>2.2</tomcat6.maven.plugin>
-    <tomcat7.maven.plugin>2.2</tomcat7.maven.plugin> -->
-    <dockerfile.maven.plugin>1.4.3</dockerfile.maven.plugin>
+    <docker.maven.plugin>0.30.0</docker.maven.plugin>
   </properties>
 
   <dependencies>
@@ -46,49 +44,49 @@
       <plugins>
 
         <plugin>
-          <groupId>com.spotify</groupId>
-          <artifactId>dockerfile-maven-plugin</artifactId>
-          <version>${dockerfile.maven.plugin}</version>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${docker.maven.plugin}</version>
           <executions>
             <execution>
-              <id>default</id>
+              <id>start</id>
+              <phase>pre-integration-test</phase>
               <goals>
                 <goal>build</goal>
+                <goal>start</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>stop</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>stop</goal>
               </goals>
             </execution>
           </executions>
+
           <configuration>
-            <repository>docker.io/robertol18/docker-mvn-training-web-app</repository>
-            <tag>${project.version}</tag>
+            <images>
+              <image>
+                <name>docker.io/robertol18/docker-maven-comparison</name>
+                <build>
+                  <dockerFile>${project.basedir}/dockerfile</dockerFile >
+                </build>
+                <run>
+                  <ports>
+                    <port>8080:8080</port>
+                  </ports>
+                  <wait>
+                    <!-- Check for this URL to return a 200 return code .... -->
+                    <url>http://localhost:8080/wizard</url>
+                    <time>120000</time>
+                  </wait>
+                </run>
+              </image>
+
+            </images>
           </configuration>
         </plugin>
-
-        <!-- <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat6-maven-plugin</artifactId>
-          <version>${tomcat6.maven.plugin}</version>
-          <configuration>
-            <path>/${project.artifactId}/${project.version}</path>
-            <url>http://localhost:8080/manager/text</url>
-            <server>tomcatserver</server>
-            <username>admin</username>
-            <password>admin</password>
-            <update>true</update>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>${tomcat7.maven.plugin}</version>
-          <configuration>
-            <url>http://localhost:8080/manager/text</url>
-            <server>tomcatserver</server>
-            <path>/${project.artifactId}/${project.version}</path>
-            <username>admin</username>
-            <password>admin</password>
-          </configuration>
-        </plugin> -->
 
       </plugins>
     </pluginManagement>
