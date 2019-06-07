@@ -1,6 +1,9 @@
 # Ignore target folder
 target/
 
+# Ignore bin folder
+bin/
+
 # Ignore target folder
 .settings/
 *.project

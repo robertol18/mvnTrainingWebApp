@@ -17,8 +17,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <tomcat6.maven.plugin>2.2</tomcat6.maven.plugin>
-    <tomcat7.maven.plugin>2.2</tomcat7.maven.plugin>
+    <!-- <tomcat6.maven.plugin>2.2</tomcat6.maven.plugin>
+    <tomcat7.maven.plugin>2.2</tomcat7.maven.plugin> -->
+    <dockerfile.maven.plugin>1.4.3</dockerfile.maven.plugin>
   </properties>
 
   <dependencies>
@@ -45,6 +46,24 @@
       <plugins>
 
         <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>dockerfile-maven-plugin</artifactId>
+          <version>${dockerfile.maven.plugin}</version>
+          <executions>
+            <execution>
+              <id>default</id>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <repository>docker.io/robertol18/docker-mvn-training-web-app</repository>
+            <tag>${project.version}</tag>
+          </configuration>
+        </plugin>
+
+        <!-- <plugin>
           <groupId>org.apache.tomcat.maven</groupId>
           <artifactId>tomcat6-maven-plugin</artifactId>
           <version>${tomcat6.maven.plugin}</version>
@@ -69,7 +88,7 @@
             <username>admin</username>
             <password>admin</password>
           </configuration>
-        </plugin>
+        </plugin> -->
 
       </plugins>
     </pluginManagement>
